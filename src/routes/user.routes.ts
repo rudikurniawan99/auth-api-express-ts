@@ -1,7 +1,10 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import { createUserHandler } from "../controller/user.controller";
+import validateResource from "../middleware/validateResource";
+import { createUserSchema } from "../schema/user.schema";
 
 const router = Router()
 
-router.get('/', (req: Request, res: Response) => res.sendStatus(200))
+router.post('/', validateResource(createUserSchema), createUserHandler)
 
 export default router

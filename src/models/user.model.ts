@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import argon2 from 'argon2'
 
-interface UserDocument extends mongoose.Document{
+export interface UserDocument extends mongoose.Document{
   firstname: string
   lastname: string
   email: string
