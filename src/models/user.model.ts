@@ -6,6 +6,7 @@ export interface UserDocument extends mongoose.Document{
   lastname: string
   email: string
   password: string
+  verifyPassword: (param: string) => Promise<boolean>
 }
 
 const userSchema = new mongoose.Schema({
