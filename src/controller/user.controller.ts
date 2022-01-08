@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import { omit } from "lodash"
 import { CreateUserInput, LoginUserInput } from "../schema/user.schema"
 import { createUser, findByEmail } from "../services/user.services"
+import sendEmail from "../utils/mailer"
 
 export const createUserHandler = async (req: Request<{},{}, CreateUserInput>, res: Response) => {
   const { body } = req 
@@ -27,7 +28,6 @@ export const createUserHandler = async (req: Request<{},{}, CreateUserInput>, re
 
 export const loginUserHandler = async (req: Request<{}, {}, LoginUserInput>, res: Response) => {
   const { body } = req
-  console.log(body)
   try {
     const user = await findByEmail(body.email)
     if(!user){
@@ -40,6 +40,14 @@ export const loginUserHandler = async (req: Request<{}, {}, LoginUserInput>, res
         message: 'password not match'
       })
     }
+
+    await sendEmail({
+      to: user?.email,
+      from: "test@gmail.com",
+      subject: "testing nodemailer",
+      text: "testtt"
+    })
+
     res.status(200).json(omit(user, ['password']))
   } catch (e: any) {
     throw new Error(e) 
