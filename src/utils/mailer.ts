@@ -18,7 +18,6 @@ const smtp = config.get<{
   secure: boolean
 }>("smtp")
 
-console.log({...smtp})
 const transporter = nodemailer.createTransport({
   ...smtp,
   auth: {
